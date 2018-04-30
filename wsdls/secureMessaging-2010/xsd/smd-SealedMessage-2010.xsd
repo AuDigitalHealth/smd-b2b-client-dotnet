@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://ns.electronichealth.net.au/smd/xsd/SealedMessage/2010"
+            xmlns:els="http://ns.electronichealth.net.au/els/xsd/DataTypes/2010"
+            xmlns:ep="http://ns.electronichealth.net.au/xsp/xsd/EncryptedPayload/2010"
+            targetNamespace="http://ns.electronichealth.net.au/smd/xsd/SealedMessage/2010"
+            elementFormDefault="qualified">
+   <xsd:import namespace="http://ns.electronichealth.net.au/els/xsd/DataTypes/2010"
+               schemaLocation="els-DataTypes-2010.xsd"/>
+   <xsd:import namespace="http://ns.electronichealth.net.au/xsp/xsd/EncryptedPayload/2010"
+               schemaLocation="xsp-EncryptedPayload-2010.xsd"/>
+   <xsd:complexType name="MessageMetadataType">
+      <xsd:sequence>
+         <xsd:element name="creationTime" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="expiryTime" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="invocationId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="receiverIndividual" type="xsd:anyURI" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="receiverOrganisation" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="senderIndividual" type="xsd:anyURI" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="senderOrganisation" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="serviceCategory" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="serviceInterface" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="routeRecord" type="tns:RouteRecordEntryType" minOccurs="0"
+                      maxOccurs="unbounded"/>
+         <xsd:element name="otherTransportMetadata" type="tns:OtherTransportMetadataEntryType"
+                      minOccurs="0"
+                      maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="OtherTransportMetadataEntryType">
+      <xsd:sequence>
+         <xsd:element name="metadataType" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="metadataValue" type="xsd:anyType" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="RouteRecordEntryType">
+      <xsd:sequence>
+         <xsd:element name="sendIntermediateResponses" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="interaction" type="els:InteractionType" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="SealedMessageType">
+      <xsd:sequence>
+         <xsd:element name="metadata" type="tns:MessageMetadataType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element ref="ep:encryptedPayload" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

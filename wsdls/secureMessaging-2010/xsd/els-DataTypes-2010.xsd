@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://ns.electronichealth.net.au/els/xsd/DataTypes/2010"
+            xmlns:qcr="http://ns.electronichealth.net.au/qcr/xsd/QualifiedCertRef/2010"
+            targetNamespace="http://ns.electronichealth.net.au/els/xsd/DataTypes/2010"
+            elementFormDefault="qualified">
+   <xsd:import namespace="http://ns.electronichealth.net.au/qcr/xsd/QualifiedCertRef/2010"
+               schemaLocation="qcr-QualifiedCertRef-2010.xsd"/>
+   <xsd:complexType name="ElsCertRefType">
+      <xsd:sequence>
+         <xsd:element name="useQualifier" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element ref="qcr:qualifiedCertRef" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="InteractionRequestType">
+      <xsd:sequence>
+         <xsd:element name="target" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="serviceCategory" type="xsd:anyURI" minOccurs="1" maxOccurs="unbounded"/>
+         <xsd:element name="serviceInterface" type="xsd:anyURI" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="InteractionType">
+      <xsd:sequence>
+         <xsd:element name="target" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="serviceCategory" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="serviceInterface" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="serviceEndpoint" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="serviceProvider" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="certRef" type="tns:ElsCertRefType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

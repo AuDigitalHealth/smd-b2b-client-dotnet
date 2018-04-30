@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://ns.electronichealth.net.au/smd/xsd/Message/2010"
+            targetNamespace="http://ns.electronichealth.net.au/smd/xsd/Message/2010"
+            elementFormDefault="qualified">
+   <xsd:element name="message" type="tns:MessageType"/>
+   <xsd:complexType name="MessageType">
+      <xsd:sequence>
+         <xsd:element name="data" type="xsd:base64Binary" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

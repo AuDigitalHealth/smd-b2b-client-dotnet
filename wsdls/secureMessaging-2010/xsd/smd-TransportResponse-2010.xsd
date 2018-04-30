@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:smsg="http://ns.electronichealth.net.au/smd/xsd/SealedMessage/2010"
+            xmlns:tns="http://ns.electronichealth.net.au/smd/xsd/TransportResponse/2010"
+            targetNamespace="http://ns.electronichealth.net.au/smd/xsd/TransportResponse/2010"
+            elementFormDefault="qualified">
+   <xsd:import namespace="http://ns.electronichealth.net.au/smd/xsd/SealedMessage/2010"
+               schemaLocation="smd-SealedMessage-2010.xsd"/>
+   <xsd:complexType name="DeliveryResponseType">
+      <xsd:sequence>
+         <xsd:element name="responseClass" type="tns:ResponseClassType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="responseCode" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="message" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="digestValue" type="xsd:base64Binary" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="ResponseClassType">
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="Success"/>
+         <xsd:enumeration value="Information"/>
+         <xsd:enumeration value="Warning"/>
+         <xsd:enumeration value="Error"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="TransportResponseMetadataType">
+      <xsd:sequence>
+         <xsd:element name="transportResponseTime" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="responseId" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="sourceOrganisation" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="serviceCategory" type="xsd:anyURI" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="invocationId" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="receiverOrganisation" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="senderOrganisation" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="otherTransportMetadata" type="smsg:OtherTransportMetadataEntryType"
+                      minOccurs="0"
+                      maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="TransportResponseType">
+      <xsd:sequence>
+         <xsd:element name="metadata" type="tns:TransportResponseMetadataType" minOccurs="1"
+                      maxOccurs="1"/>
+         <xsd:element name="deliveryResponse" type="tns:DeliveryResponseType" minOccurs="1"
+                      maxOccurs="1"/>
+         <xsd:element name="final" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

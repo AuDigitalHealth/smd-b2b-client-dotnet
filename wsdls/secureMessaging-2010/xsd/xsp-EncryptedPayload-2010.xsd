@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://ns.electronichealth.net.au/xsp/xsd/EncryptedPayload/2010"
+            xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"
+            targetNamespace="http://ns.electronichealth.net.au/xsp/xsd/EncryptedPayload/2010"
+            elementFormDefault="qualified">
+   <xsd:import namespace="http://www.w3.org/2001/04/xmlenc#" schemaLocation="xenc-schema.xsd"/>
+   <xsd:element name="encryptedPayload" type="tns:EncryptedPayloadType"/>
+   <xsd:complexType name="EncryptedPayloadDataType">
+      <xsd:sequence>
+         <xsd:element ref="xenc:EncryptedData" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="EncryptedPayloadType">
+      <xsd:sequence>
+         <xsd:element name="keys" type="tns:KeyListType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="encryptedPayloadData" type="tns:EncryptedPayloadDataType" minOccurs="1"
+                      maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="KeyListType">
+      <xsd:sequence>
+         <xsd:element ref="xenc:EncryptedKey" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

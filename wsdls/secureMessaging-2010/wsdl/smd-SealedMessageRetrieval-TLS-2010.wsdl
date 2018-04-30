@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsp="http://www.w3.org/ns/ws-policy"
+                  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+                  xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010"
+                  xmlns:se="http://ns.electronichealth.net.au/wsp/xsd/StandardError/2010"
+                  xmlns:smsg="http://ns.electronichealth.net.au/smd/xsd/SealedMessage/2010"
+                  name="SealedMessageRetrieval"
+                  targetNamespace="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010">
+   <wsp:Policy xml:id="AddressingPolicy">
+      <wsam:Addressing/>
+   </wsp:Policy>
+   <wsp:Policy xml:id="TlsPolicy">
+      <sp:TransportBinding>
+         <wsp:Policy>
+            <sp:TransportToken>
+               <wsp:Policy>
+                  <sp:HttpsToken>
+                     <wsp:Policy>
+                        <sp:RequireClientCertificate/>
+                     </wsp:Policy>
+                  </sp:HttpsToken>
+               </wsp:Policy>
+            </sp:TransportToken>
+            <!-- Use TLS protocol negotiation instead of <sp:AlgorithmSuite/> -->
+         </wsp:Policy>
+      </sp:TransportBinding>
+   </wsp:Policy>
+   <wsdl:import namespace="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010"
+                location="smd-SealedMessageRetrieval-Interface-2010.wsdl"/>
+   <wsdl:binding name="SealedMessageRetrievalBinding" type="tns:SealedMessageRetrieval">
+      <wsp:PolicyReference URI="#AddressingPolicy"/>
+      <wsp:PolicyReference URI="#TlsPolicy"/>
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="list">
+         <soap:operation style="document" soapActionRequired="false"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="listError">
+            <soap:fault name="listError" use="literal"/>
+         </wsdl:fault>
+         <wsdl:fault name="standardError">
+            <soap:fault name="standardError" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="retrieve">
+         <soap:operation style="document" soapActionRequired="false"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="retrieveError">
+            <soap:fault name="retrieveError" use="literal"/>
+         </wsdl:fault>
+         <wsdl:fault name="standardError">
+            <soap:fault name="standardError" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="SealedMessageRetrievalService">
+      <wsdl:port name="SealedMessageRetrieval" binding="tns:SealedMessageRetrievalBinding">
+         <soap:address location="http://dummy.example.com"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

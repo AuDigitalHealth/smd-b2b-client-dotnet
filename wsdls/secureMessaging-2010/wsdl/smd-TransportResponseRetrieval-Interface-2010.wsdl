@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://ns.electronichealth.net.au/smd/svc/TransportResponseRetrieval/2010"
+                  xmlns:se="http://ns.electronichealth.net.au/wsp/xsd/StandardError/2010"
+                  xmlns:trsp="http://ns.electronichealth.net.au/smd/xsd/TransportResponse/2010"
+                  name="TransportResponseRetrieval"
+                  targetNamespace="http://ns.electronichealth.net.au/smd/svc/TransportResponseRetrieval/2010">
+   <wsdl:types>
+      <xsd:schema targetNamespace="http://ns.electronichealth.net.au/smd/svc/TransportResponseRetrieval/2010"
+                  elementFormDefault="qualified">
+         <xsd:import namespace="http://ns.electronichealth.net.au/wsp/xsd/StandardError/2010"
+                     schemaLocation="../xsd/wsp-StandardError-2010.xsd"/>
+         <xsd:import namespace="http://ns.electronichealth.net.au/smd/xsd/TransportResponse/2010"
+                     schemaLocation="../xsd/smd-TransportResponse-2010.xsd"/>
+         <xsd:element name="remove">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="force" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="organisation" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="responseId" type="xsd:anyURI" minOccurs="1" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="removeResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="result" type="tns:RemoveResultType" minOccurs="1" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="retrieve">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="organisation" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="allAvailable" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="limit" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="retrieveResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="list" type="tns:TransportResponseListType" minOccurs="1" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="removeError" type="tns:RemoveErrorType"/>
+         <xsd:element name="retrieveError" type="tns:RetrieveErrorType"/>
+         <xsd:simpleType name="RemoveErrorCodeType">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="unknownResponse"/>
+               <xsd:enumeration value="unknownOrganisation"/>
+               <xsd:enumeration value="hasNotBeenRetrieved"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:simpleType name="RemoveStatusType">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="ok"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:simpleType name="RetrieveErrorCodeType">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="unknownOrganisation"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:complexType name="RemoveErrorType">
+            <xsd:sequence>
+               <xsd:element name="errorCode" type="tns:RemoveErrorCodeType" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="message" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="responseId" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="RemoveResultType">
+            <xsd:sequence>
+               <xsd:element name="responseId" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="status" type="tns:RemoveStatusType" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="RetrieveErrorType">
+            <xsd:sequence>
+               <xsd:element name="errorCode" type="tns:RetrieveErrorCodeType" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="message" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="TransportResponseKey">
+            <xsd:sequence>
+               <xsd:element name="responseId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="sourceOrganisation" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="TransportResponseListType">
+            <xsd:sequence>
+               <xsd:element name="totalNumberAvailable" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="response" type="trsp:TransportResponseType" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="removeInMsg">
+      <wsdl:part name="body" element="tns:remove"/>
+   </wsdl:message>
+   <wsdl:message name="removeOutMsg">
+      <wsdl:part name="body" element="tns:removeResponse"/>
+   </wsdl:message>
+   <wsdl:message name="retrieveInMsg">
+      <wsdl:part name="body" element="tns:retrieve"/>
+   </wsdl:message>
+   <wsdl:message name="retrieveOutMsg">
+      <wsdl:part name="body" element="tns:retrieveResponse"/>
+   </wsdl:message>
+   <wsdl:message name="removeErrorMsg">
+      <wsdl:part name="fault" element="tns:removeError"/>
+   </wsdl:message>
+   <wsdl:message name="standardErrorMsg">
+      <wsdl:part name="fault" element="se:standardError"/>
+   </wsdl:message>
+   <wsdl:message name="retrieveErrorMsg">
+      <wsdl:part name="fault" element="tns:retrieveError"/>
+   </wsdl:message>
+   <wsdl:portType name="TransportResponseRetrieval">
+      <wsdl:operation name="remove">
+         <wsdl:input message="tns:removeInMsg"
+                     wsam:Action="http://ns.electronichealth.net.au/smd/svc/TransportResponseRetrieval/2010/TransportResponseRetrieval/removeRequest"/>
+         <wsdl:output message="tns:removeOutMsg"
+                      wsam:Action="http://ns.electronichealth.net.au/smd/svc/TransportResponseRetrieval/2010/TransportResponseRetrieval/removeResponse"/>
+         <wsdl:fault name="removeError" message="tns:removeErrorMsg"
+                     wsam:Action="http://ns.electronichealth.net.au/smd/svc/TransportResponseRetrieval/2010/TransportResponseRetrieval/remove/Fault/removeError"/>
+         <wsdl:fault name="standardError" message="tns:standardErrorMsg"
+                     wsam:Action="http://ns.electronichealth.net.au/smd/svc/TransportResponseRetrieval/2010/TransportResponseRetrieval/remove/Fault/standardError"/>
+      </wsdl:operation>
+      <wsdl:operation name="retrieve">
+         <wsdl:input message="tns:retrieveInMsg"
+                     wsam:Action="http://ns.electronichealth.net.au/smd/svc/TransportResponseRetrieval/2010/TransportResponseRetrieval/retrieveRequest"/>
+         <wsdl:output message="tns:retrieveOutMsg"
+                      wsam:Action="http://ns.electronichealth.net.au/smd/svc/TransportResponseRetrieval/2010/TransportResponseRetrieval/retrieveResponse"/>
+         <wsdl:fault name="retrieveError" message="tns:retrieveErrorMsg"
+                     wsam:Action="http://ns.electronichealth.net.au/smd/svc/TransportResponseRetrieval/2010/TransportResponseRetrieval/retrieve/Fault/retrieveError"/>
+         <wsdl:fault name="standardError" message="tns:standardErrorMsg"
+                     wsam:Action="http://ns.electronichealth.net.au/smd/svc/TransportResponseRetrieval/2010/TransportResponseRetrieval/retrieve/Fault/standardError"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

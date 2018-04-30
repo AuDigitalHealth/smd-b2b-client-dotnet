@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:smsg="http://ns.electronichealth.net.au/smd/xsd/SealedMessage/2010"
+            xmlns:tns="http://ns.electronichealth.net.au/smd/xsd/SealedSmimeMessage/2010"
+            targetNamespace="http://ns.electronichealth.net.au/smd/xsd/SealedSmimeMessage/2010"
+            elementFormDefault="qualified">
+   <xsd:import namespace="http://ns.electronichealth.net.au/smd/xsd/SealedMessage/2010"
+               schemaLocation="smd-SealedMessage-2010.xsd"/>
+   <xsd:complexType name="SealedSmimeMessageType">
+      <xsd:sequence>
+         <xsd:element name="metadata" type="smsg:MessageMetadataType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="payload" type="xsd:base64Binary" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://ns.electronichealth.net.au/xsp/xsd/SignedPayload/2010"
+            xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+            targetNamespace="http://ns.electronichealth.net.au/xsp/xsd/SignedPayload/2010"
+            elementFormDefault="qualified">
+   <xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"
+               schemaLocation="xmldsig-core-schema.xsd"/>
+   <xsd:complexType name="SignatureListType">
+      <xsd:sequence>
+         <xsd:element ref="ds:Signature" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="signedPayload" type="tns:SignedPayloadType"/>
+   <xsd:complexType name="SignedPayloadDataType">
+      <xsd:sequence>
+         <xsd:any processContents="lax" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+      <xsd:attribute name="id" type="xsd:string" use="required"/>
+   </xsd:complexType>
+   <xsd:complexType name="SignedPayloadType">
+      <xsd:sequence>
+         <xsd:element name="signatures" type="tns:SignatureListType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="signedPayloadData" type="tns:SignedPayloadDataType" minOccurs="1"
+                      maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

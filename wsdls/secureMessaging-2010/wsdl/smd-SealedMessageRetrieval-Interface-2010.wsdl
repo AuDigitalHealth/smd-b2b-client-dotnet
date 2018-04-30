@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010"
+                  xmlns:se="http://ns.electronichealth.net.au/wsp/xsd/StandardError/2010"
+                  xmlns:smsg="http://ns.electronichealth.net.au/smd/xsd/SealedMessage/2010"
+                  name="SealedMessageRetrieval"
+                  targetNamespace="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010">
+   <wsdl:types>
+      <xsd:schema targetNamespace="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010"
+                  elementFormDefault="qualified">
+         <xsd:import namespace="http://ns.electronichealth.net.au/wsp/xsd/StandardError/2010"
+                     schemaLocation="../xsd/wsp-StandardError-2010.xsd"/>
+         <xsd:import namespace="http://ns.electronichealth.net.au/smd/xsd/SealedMessage/2010"
+                     schemaLocation="../xsd/smd-SealedMessage-2010.xsd"/>
+         <xsd:element name="list">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="receiverOrganisation" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="allAvailable" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="limit" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="listResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="list" type="tns:MessageListType" minOccurs="1" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="retrieve">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="receiverOrganisation" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="invocationId" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="retrieveResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="message" type="smsg:SealedMessageType" minOccurs="0"
+                               maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="listError" type="tns:ListErrorType"/>
+         <xsd:element name="retrieveError" type="tns:RetrieveErrorType"/>
+         <xsd:simpleType name="ListErrorCodeType">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="unknownReceiverOrganisation"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:simpleType name="RetrieveErrorCodeType">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="unknownMessage"/>
+               <xsd:enumeration value="unknownReceiverOrganisation"/>
+               <xsd:enumeration value="hasBeenRemoved"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:complexType name="ListErrorType">
+            <xsd:sequence>
+               <xsd:element name="errorCode" type="tns:ListErrorCodeType" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="message" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="MessageListType">
+            <xsd:sequence>
+               <xsd:element name="totalNumberAvailable" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="retrievalRecord" type="tns:RetrievalRecordEntryType" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="RetrievalRecordEntryType">
+            <xsd:sequence>
+               <xsd:element name="messageSize" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="metadata" type="smsg:MessageMetadataType" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="RetrieveErrorType">
+            <xsd:sequence>
+               <xsd:element name="errorCode" type="tns:RetrieveErrorCodeType" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="message" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="invocationId" type="xsd:anyURI" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="listInMsg">
+      <wsdl:part name="body" element="tns:list"/>
+   </wsdl:message>
+   <wsdl:message name="listOutMsg">
+      <wsdl:part name="body" element="tns:listResponse"/>
+   </wsdl:message>
+   <wsdl:message name="retrieveInMsg">
+      <wsdl:part name="body" element="tns:retrieve"/>
+   </wsdl:message>
+   <wsdl:message name="retrieveOutMsg">
+      <wsdl:part name="body" element="tns:retrieveResponse"/>
+   </wsdl:message>
+   <wsdl:message name="listErrorMsg">
+      <wsdl:part name="fault" element="tns:listError"/>
+   </wsdl:message>
+   <wsdl:message name="standardErrorMsg">
+      <wsdl:part name="fault" element="se:standardError"/>
+   </wsdl:message>
+   <wsdl:message name="retrieveErrorMsg">
+      <wsdl:part name="fault" element="tns:retrieveError"/>
+   </wsdl:message>
+   <wsdl:portType name="SealedMessageRetrieval">
+      <wsdl:operation name="list">
+         <wsdl:input message="tns:listInMsg"
+                     wsam:Action="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010/SealedMessageRetrieval/listRequest"/>
+         <wsdl:output message="tns:listOutMsg"
+                      wsam:Action="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010/SealedMessageRetrieval/listResponse"/>
+         <wsdl:fault name="listError" message="tns:listErrorMsg"
+                     wsam:Action="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010/SealedMessageRetrieval/list/Fault/listError"/>
+         <wsdl:fault name="standardError" message="tns:standardErrorMsg"
+                     wsam:Action="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010/SealedMessageRetrieval/list/Fault/standardError"/>
+      </wsdl:operation>
+      <wsdl:operation name="retrieve">
+         <wsdl:input message="tns:retrieveInMsg"
+                     wsam:Action="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010/SealedMessageRetrieval/retrieveRequest"/>
+         <wsdl:output message="tns:retrieveOutMsg"
+                      wsam:Action="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010/SealedMessageRetrieval/retrieveResponse"/>
+         <wsdl:fault name="retrieveError" message="tns:retrieveErrorMsg"
+                     wsam:Action="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010/SealedMessageRetrieval/retrieve/Fault/retrieveError"/>
+         <wsdl:fault name="standardError" message="tns:standardErrorMsg"
+                     wsam:Action="http://ns.electronichealth.net.au/smd/svc/SealedMessageRetrieval/2010/SealedMessageRetrieval/retrieve/Fault/standardError"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>
