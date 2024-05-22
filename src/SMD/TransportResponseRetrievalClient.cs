@@ -103,7 +103,7 @@ namespace Nehta.VendorLibrary.SM.SMD
             if (response != null && response.retrieveResponse != null)
                 return response.retrieveResponse.list;
             else
-                throw new ApplicationException(Properties.Resources.UnexpectedServiceResponse);
+                throw new ApplicationException(ServiceInterfaces.UnexpectedServiceResponse);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Nehta.VendorLibrary.SM.SMD
             if (response != null)
                 return response.removeResponse1;
             else
-                throw new ApplicationException(Properties.Resources.UnexpectedServiceResponse);
+                throw new ApplicationException(ServiceInterfaces.UnexpectedServiceResponse);
         }
 
         #region Private and internal methods

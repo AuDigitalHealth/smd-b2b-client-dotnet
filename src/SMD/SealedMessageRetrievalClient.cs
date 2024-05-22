@@ -18,7 +18,6 @@ using System.ServiceModel;
 using Nehta.VendorLibrary.Common;
 using Nehta.SMD2010.SMR;
 using System.ServiceModel.Channels;
-using System.Xml;
 
 namespace Nehta.VendorLibrary.SM.SMD
 {
@@ -104,7 +103,7 @@ namespace Nehta.VendorLibrary.SM.SMD
             if (response != null && response.listResponse != null)
                 return response.listResponse.list;
             else
-                throw new ApplicationException(Properties.Resources.UnexpectedServiceResponse);
+                throw new ApplicationException(ServiceInterfaces.UnexpectedServiceResponse);
         }
 
         /// <summary>
@@ -135,7 +134,7 @@ namespace Nehta.VendorLibrary.SM.SMD
             if (response != null)
                 return response.retrieveResponse1;
             else
-                throw new ApplicationException(Properties.Resources.UnexpectedServiceResponse);
+                throw new ApplicationException(ServiceInterfaces.UnexpectedServiceResponse);
         }
 
         #region Private and internal methods

@@ -13,9 +13,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using Nehta.VendorLibrary.Common;
 using Nehta.SMD2010.SMD;

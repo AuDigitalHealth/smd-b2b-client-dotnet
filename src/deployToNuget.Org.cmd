@@ -1,10 +1,10 @@
 del *.nupkg
 
-nuget restore
-
 msbuild SMD.sln /p:Configuration=Release
 
-NuGet.exe pack SMD/SMD.csproj -Properties Configuration=Release
+REM Use dotnet for packaging now
+REM NuGet.exe pack SMD/SMD.csproj -Properties Configuration=Release
+dotnet pack .\SMD\SMD.csproj -c Release -o .
 
 pause
 

@@ -187,7 +187,7 @@ namespace Nehta.VendorLibrary.SM.SMD
             if (response != null && response.deliverResponse != null)
                 return response.deliverResponse;
             else
-                throw new ApplicationException(Properties.Resources.UnexpectedServiceResponse);
+                throw new ApplicationException(ServiceInterfaces.UnexpectedServiceResponse);
         }
 
         #region Private and internal methods

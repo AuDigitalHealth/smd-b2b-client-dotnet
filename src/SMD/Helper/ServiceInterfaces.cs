@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Nehta.VendorLibrary.SM.SMD
+﻿namespace Nehta.VendorLibrary.SM.SMD
 {
     /// <summary>
     /// Service interface values for Secure Message Delivery operations.
@@ -34,5 +29,11 @@ namespace Nehta.VendorLibrary.SM.SMD
         /// Sealed Message Retrieval
         /// </summary>
         public const string SmrServiceInterface = "http://ns.electronichealth.net.au/smd/intf/SealedMessageRetrieval/TLS/2010";
+
+        /// <summary>
+        /// ApplicationException UnexpectedServiceResponse 
+        /// </summary>
+        public const string UnexpectedServiceResponse = "Unexpected response received from the service";
+        
     }
 }

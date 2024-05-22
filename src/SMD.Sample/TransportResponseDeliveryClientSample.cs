@@ -14,12 +14,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Security.Cryptography.X509Certificates;
+using System.Xml;
 using Nehta.VendorLibrary.Common;
 using Nehta.SMD2010.TRD;
-using System.Xml;
 
 namespace Nehta.VendorLibrary.SM.SMD.Sample
 {
